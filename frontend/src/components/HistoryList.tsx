@@ -3,14 +3,20 @@ import type { MatrixRecord } from '../api/matrices';
 interface HistoryListProps {
   items: MatrixRecord[];
   onSelect: (record: MatrixRecord) => void;
+  onClear: () => void;
 }
 
-export function HistoryList({ items, onSelect }: HistoryListProps) {
+export function HistoryList({ items, onSelect, onClear }: HistoryListProps) {
   if (items.length === 0) return null;
 
   return (
     <section className="card history" aria-label="Historial de matrices">
-      <h2>Historial reciente</h2>
+      <div className="history-header">
+        <h2>Historial reciente</h2>
+        <button type="button" className="clear-button" onClick={onClear}>
+          Eliminar historial
+        </button>
+      </div>
       <ul>
         {items.map((item) => (
           <li key={item.id}>

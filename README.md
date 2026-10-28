@@ -4,8 +4,8 @@ Aplicación full stack que genera matrices **N×N** llenas con los números `1..
 (serpentina), las persiste y las muestra en una grilla visual.
 
 - **API REST:** Node.js 24 + Express 5 + TypeScript, con CQRS ligero, DTOs validados con Zod y SQLite.
-- **Frontend:** React 19 + Vite + TypeScript, con validación en el formulario, grilla e historial.
-- **Pruebas:** 48 tests (31 backend / 17 frontend) con ~97 % de cobertura.
+- **Frontend:** React 19 + Vite + TypeScript, con validación en el formulario, grilla e historial (con opción de eliminarlo).
+- **Pruebas:** 52 tests (32 backend / 20 frontend) con ~95 % de cobertura.
 - **Despliegue:** Render (API) + Vercel (frontend).
 
 | Entorno | URL |
@@ -81,6 +81,7 @@ Base URL local: `http://localhost:4000`
 | `POST` | `/api/v1/matrices` | Genera, persiste y devuelve una matriz N×N |
 | `GET` | `/api/v1/matrices?limit=8` | Lista las últimas matrices (máx. 50) |
 | `GET` | `/api/v1/matrices/:id` | Devuelve una matriz por id |
+| `DELETE` | `/api/v1/matrices` | Vacía el historial (204) |
 | `GET` | `/health` | Estado del servicio |
 
 ### POST `/api/v1/matrices`
@@ -292,15 +293,15 @@ cd frontend && npm run test:coverage
 | --- | --- | --- |
 | Backend · `matrix.test.ts` | Algoritmo: N=1..4, unicidad de 1..N², alternancia de filas | 6 tests |
 | Backend · `dto.test.ts` | DTO: rangos, decimales, strings, campos extra | 7 tests |
-| Backend · `api.test.ts` | Endpoints, validación, 404, JSON inválido, 500, persistencia | 18 tests |
+| Backend · `api.test.ts` | Endpoints, validación, 404, JSON inválido, 500, persistencia, borrado | 19 tests |
 | Frontend · `MatrixForm.test.tsx` | Validación del formulario y envío | 9 tests |
 | Frontend · `MatrixGrid.test.tsx` | Render de N² celdas y accesibilidad | 1 test |
-| Frontend · `HistoryList.test.tsx` | Lista vacía y selección | 2 tests |
-| Frontend · `App.test.tsx` | Flujo completo y error de API | 2 tests |
-| Frontend · `api.test.ts` | Cliente HTTP: éxito, error de API, sin conexión | 3 tests |
+| Frontend · `HistoryList.test.tsx` | Lista vacía, selección y borrado | 3 tests |
+| Frontend · `App.test.tsx` | Flujo completo, error de API y limpieza | 3 tests |
+| Frontend · `api.test.ts` | Cliente HTTP: éxito, error de API, sin conexión, DELETE | 4 tests |
 
-Cobertura actual (Vitest + V8): backend **97.4 % statements / 100 % líneas**, frontend
-**96.5 % statements / 98 % líneas**.
+Cobertura actual (Vitest + V8): backend **97.6 % statements / 100 % líneas**, frontend
+**94 % statements / 96.6 % líneas**.
 
 ---
 

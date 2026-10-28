@@ -19,6 +19,8 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
     throw new Error('No se pudo conectar con la API');
   }
 
+  if (response.status === 204) return undefined as T;
+
   const body = (await response.json().catch(() => null)) as {
     error?: { message?: string };
   } | null;
@@ -39,4 +41,8 @@ export function generateMatrix(size: number): Promise<MatrixRecord> {
 
 export function listMatrices(limit = 8): Promise<{ items: MatrixRecord[] }> {
   return request<{ items: MatrixRecord[] }>(`/matrices?limit=${limit}`);
+}
+
+export function clearMatrices(): Promise<void> {
+  return request<void>('/matrices', { method: 'DELETE' });
 }

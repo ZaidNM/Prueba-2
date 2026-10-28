@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { generateMatrix, listMatrices, type MatrixRecord } from './api/matrices';
+import { generateMatrix, listMatrices, clearMatrices, type MatrixRecord } from './api/matrices';
 import { MatrixForm } from './components/MatrixForm';
 import { MatrixGrid } from './components/MatrixGrid';
 import { HistoryList } from './components/HistoryList';
@@ -30,6 +30,18 @@ export default function App() {
       setError(cause instanceof Error ? cause.message : 'Ocurrió un error inesperado');
     } finally {
       setLoading(false);
+    }
+  }
+
+  async function handleClear() {
+    if (!window.confirm('¿Eliminar todo el historial?')) return;
+
+    try {
+      await clearMatrices();
+      setHistory([]);
+      setError(null);
+    } catch (cause) {
+      setError(cause instanceof Error ? cause.message : 'No se pudo eliminar el historial');
     }
   }
 
@@ -68,7 +80,7 @@ export default function App() {
         </section>
       </main>
 
-      <HistoryList items={history} onSelect={setResult} />
+      <HistoryList items={history} onSelect={setResult} onClear={handleClear} />
     </div>
   );
 }

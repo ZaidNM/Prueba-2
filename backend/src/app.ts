@@ -2,6 +2,7 @@ import cors from 'cors';
 import express, { type Express } from 'express';
 import type { MatrixRepository } from './application/ports/matrix-repository.js';
 import { GenerateMatrixHandler } from './application/commands/generate-matrix.js';
+import { ClearMatricesCommand } from './application/commands/clear-matrices.js';
 import { ListMatricesQuery } from './application/queries/list-matrices.js';
 import { GetMatrixQuery } from './application/queries/get-matrix.js';
 import { createMatrixRouter } from './http/routes.js';
@@ -27,6 +28,7 @@ export function createApp({ repository, corsOrigin = '*' }: AppDependencies): Ex
     '/api/v1',
     createMatrixRouter({
       generateMatrix: new GenerateMatrixHandler(repository),
+      clearMatrices: new ClearMatricesCommand(repository),
       listMatrices: new ListMatricesQuery(repository),
       getMatrix: new GetMatrixQuery(repository),
     }),

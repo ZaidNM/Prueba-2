@@ -58,6 +58,10 @@ export class SqliteMatrixRepository implements MatrixRepository {
     const row = this.db.prepare('SELECT * FROM matrices WHERE id = ?').get(id) as Row | undefined;
     return row ? toRecord(row) : null;
   }
+
+  clear(): void {
+    this.db.exec('DELETE FROM matrices');
+  }
 }
 
 function toRecord(row: Row): MatrixRecord {

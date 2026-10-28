@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { generateMatrix, listMatrices } from '../src/api/matrices';
+import { generateMatrix, listMatrices, clearMatrices } from '../src/api/matrices';
 
 function stubFetch(status: number, body: unknown) {
   vi.stubGlobal(
@@ -38,5 +38,15 @@ describe('api/matrices', () => {
     vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new TypeError('fetch failed')));
 
     await expect(listMatrices()).rejects.toThrow('No se pudo conectar con la API');
+  });
+
+  it('envía DELETE para vaciar el historial', async () => {
+    stubFetch(204, null);
+
+    await expect(clearMatrices()).resolves.toBeUndefined();
+    expect(fetch).toHaveBeenCalledWith(
+      expect.stringMatching(/\/api\/v1\/matrices$/),
+      expect.objectContaining({ method: 'DELETE' }),
+    );
   });
 });

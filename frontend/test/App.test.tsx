@@ -2,11 +2,12 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import App from '../src/App';
-import { generateMatrix, listMatrices } from '../src/api/matrices';
+import { clearMatrices, generateMatrix, listMatrices } from '../src/api/matrices';
 
 vi.mock('../src/api/matrices', () => ({
   generateMatrix: vi.fn(),
   listMatrices: vi.fn(),
+  clearMatrices: vi.fn(),
 }));
 
 const record = {
@@ -48,5 +49,18 @@ describe('App', () => {
     await user.click(screen.getByRole('button', { name: 'Generar' }));
 
     expect(await screen.findByRole('alert')).toHaveTextContent('Datos inválidos');
+  });
+
+  it('elimina el historial al confirmar', async () => {
+    vi.mocked(listMatrices).mockResolvedValue({ items: [record] });
+    vi.mocked(clearMatrices).mockResolvedValue(undefined);
+    vi.spyOn(window, 'confirm').mockReturnValue(true);
+    const user = userEvent.setup();
+    render(<App />);
+
+    await user.click(await screen.findByRole('button', { name: 'Eliminar historial' }));
+
+    expect(clearMatrices).toHaveBeenCalled();
+    expect(screen.queryByRole('button', { name: /3 × 3/ })).not.toBeInTheDocument();
   });
 });

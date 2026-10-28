@@ -61,6 +61,7 @@ describe('POST /api/v1/matrices', () => {
         },
         list: () => [],
         findById: () => null,
+        clear: () => {},
       },
     });
 
@@ -95,6 +96,18 @@ describe('GET /api/v1/matrices', () => {
 
     expect(response.status).toBe(200);
     expect(response.body.items).toEqual([]);
+  });
+});
+
+describe('DELETE /api/v1/matrices', () => {
+  it('vacía el historial', async () => {
+    await request(app).post('/api/v1/matrices').send({ size: 2 });
+
+    const response = await request(app).delete('/api/v1/matrices');
+
+    expect(response.status).toBe(204);
+    const list = await request(app).get('/api/v1/matrices');
+    expect(list.body.items).toEqual([]);
   });
 });
 

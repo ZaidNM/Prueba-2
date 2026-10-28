@@ -198,6 +198,29 @@ button:focus-visible {
   margin-top: 1.25rem;
 }
 
+.history-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.history-header h2 {
+  margin: 0;
+}
+
+.clear-button {
+  padding: 0.4rem 0.7rem;
+  font-size: 0.8rem;
+  background: #fff;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+}
+
+.clear-button:hover:not(:disabled) {
+  background: #fef2f2;
+}
+
 .history ul {
   display: flex;
   flex-wrap: wrap;
@@ -207,7 +230,7 @@ button:focus-visible {
   padding: 0;
 }
 
-.history button {
+.history ul button {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -219,7 +242,7 @@ button:focus-visible {
   text-align: left;
 }
 
-.history button:hover:not(:disabled) {
+.history ul button:hover:not(:disabled) {
   background: #eef2ff;
   border-color: #c7d2fe;
 }
