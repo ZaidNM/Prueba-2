@@ -43,14 +43,14 @@ Prueba-2/
 │   │   │   └── errors.ts           # AppError, NotFoundError
 │   │   ├── application/            # Casos de uso (CQRS) y contratos
 │   │   │   ├── dto.ts              # DTO + validación Zod
-│   │   │   ├── commands/           # Escritura: GenerateMatrixHandler
+│   │   │   ├── commands/           # Escritura: GenerateMatrixHandler, ClearMatricesCommand
 │   │   │   ├── queries/            # Lectura: ListMatricesQuery, GetMatrixQuery
 │   │   │   └── ports/              # Interfaz MatrixRepository
 │   │   ├── infrastructure/         # Adaptador SQLite
 │   │   ├── http/                   # Router, middleware de errores
 │   │   ├── app.ts                  # Composición de dependencias
 │   │   └── server.ts               # Arranque (puerto, env, BD)
-│   ├── test/                       # 31 pruebas (unitarias + integración)
+│   ├── test/                       # 32 pruebas (unitarias + integración)
 │   ├── .env.example
 │   └── package.json
 ├── frontend/
@@ -59,7 +59,7 @@ Prueba-2/
 │   │   ├── components/             # MatrixForm, MatrixGrid, HistoryList
 │   │   ├── App.tsx                 # Estado y composición
 │   │   └── styles.css
-│   ├── test/                       # 17 pruebas (componentes + API)
+│   ├── test/                       # 20 pruebas (componentes + API)
 │   ├── .env.example
 │   └── package.json
 ├── render.yaml                     # Blueprint de despliegue de la API
@@ -282,8 +282,8 @@ el puerto 5173, añade su origen a `CORS_ORIGIN` (separado por comas).
 ## 6. Pruebas
 
 ```bash
-cd backend && npm test          # 31 tests
-cd frontend && npm test         # 17 tests
+cd backend && npm test          # 32 tests
+cd frontend && npm test         # 20 tests
 
 cd backend && npm run test:coverage
 cd frontend && npm run test:coverage
