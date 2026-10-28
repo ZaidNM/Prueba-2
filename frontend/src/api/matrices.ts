@@ -5,7 +5,7 @@ export interface MatrixRecord {
   createdAt: string;
 }
 
-const API_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:4000';
+const API_URL = __API_URL__;
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
   let response: Response;

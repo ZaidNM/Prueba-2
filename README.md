@@ -250,7 +250,9 @@ cp .env.example .env      # Windows: copy .env.example .env
 npm run dev               # http://localhost:5173
 ```
 
-`VITE_API_URL` apunta a la API (por defecto `http://localhost:4000`).
+`VITE_API_URL` se lee en `frontend/vite.config.ts` y se inyecta como constante en el
+cliente; si no está definida, usa `http://localhost:4000`. Para apuntar a otra API,
+cámbiala en `.env` o en el entorno de build (Vercel).
 
 ### Base de datos
 
