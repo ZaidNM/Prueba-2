@@ -250,9 +250,9 @@ cp .env.example .env      # Windows: copy .env.example .env
 npm run dev               # http://localhost:5173
 ```
 
-`VITE_API_URL` se lee en `frontend/vite.config.ts` y se inyecta como constante en el
-cliente; si no está definida, usa `http://localhost:4000`. Para apuntar a otra API,
-cámbiala en `.env` o en el entorno de build (Vercel).
+`VITE_API_URL` define la URL de la API. En desarrollo, si no está definida, el cliente
+usa rutas relativas (`/api/v1/...`) y Vite las redirige a `http://localhost:4000` con el
+proxy de `vite.config.ts` (sin problemas de CORS). En Vercel se define con la URL de Render.
 
 ### Base de datos
 
@@ -269,6 +269,12 @@ CREATE TABLE IF NOT EXISTS matrices (
 
 Para reiniciar los datos en local, borra `backend/data/matrices.db`. Los tests usan una base
 en memoria (`:memory:`), por lo que nunca tocan tus datos.
+
+### Si el puerto 4000 está ocupado
+
+Crea `backend/.env` con `PORT=4001` y `frontend/.env` con
+`VITE_API_URL=http://localhost:4001`; reinicia ambos servidores. Si el frontend no corre en
+el puerto 5173, añade su origen a `CORS_ORIGIN` (separado por comas).
 
 ---
 

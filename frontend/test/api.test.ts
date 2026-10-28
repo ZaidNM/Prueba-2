@@ -23,7 +23,7 @@ describe('api/matrices', () => {
 
     await expect(generateMatrix(2)).resolves.toEqual(record);
     expect(fetch).toHaveBeenCalledWith(
-      'http://localhost:4000/api/v1/matrices',
+      expect.stringMatching(/\/api\/v1\/matrices$/),
       expect.objectContaining({ method: 'POST', body: JSON.stringify({ size: 2 }) }),
     );
   });

@@ -8,8 +8,12 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [react()],
-    define: {
-      __API_URL__: JSON.stringify(apiUrl),
+    server: {
+      // En desarrollo, si no hay VITE_API_URL, el cliente llama rutas relativas
+      // y Vite las redirige aquí (evita CORS).
+      proxy: {
+        '/api': apiUrl,
+      },
     },
     test: {
       environment: 'jsdom',
