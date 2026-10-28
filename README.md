@@ -84,38 +84,7 @@ Base URL local: `http://localhost:4000`
 | `DELETE` | `/api/v1/matrices` | Vacía el historial (204) |
 | `GET` | `/health` | Estado del servicio |
 
-### POST `/api/v1/matrices`
 
-```bash
-curl -X POST http://localhost:4000/api/v1/matrices \
-  -H "Content-Type: application/json" \
-  -d '{"size": 3}'
-```
-
-`201 Created`
-
-```json
-{
-  "id": "5f0d2c3a-9c1e-4b7e-8f0a-2d4c6b8e1a3f",
-  "size": 3,
-  "matrix": [
-    [1, 2, 3],
-    [6, 5, 4],
-    [7, 8, 9]
-  ],
-  "createdAt": "2026-10-28T15:00:00.000Z"
-}
-```
-
-### GET `/api/v1/matrices`
-
-```json
-{
-  "items": [
-    { "id": "...", "size": 3, "matrix": [[1, 2, 3], [6, 5, 4], [7, 8, 9]], "createdAt": "..." }
-  ]
-}
-```
 
 ### Validación y errores
 
